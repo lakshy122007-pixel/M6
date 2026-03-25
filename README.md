@@ -17,7 +17,7 @@ To write a C Program to find area of rectangle using pointer.
    area = (*p1) * (*p2)
 7. Display the area.
 8. Stop the program.
-9. 
+  
 ## PROGRAM
 
 ```
