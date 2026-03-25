@@ -7,31 +7,46 @@ To write a C Program to find area of rectangle using pointer.
 ## ALGORITHM
 
 1. Start the program.
-2. Read two numbers.
-3. Calculate the area of rectangle using the formula area=(x)(\*y)
-4. Display the result.
-5. Stop the program.
-
+2. Declare variables length, breadth, and area.
+3. Declare pointers p1 and p2.
+4. Read values of length and breadth from the user.
+5. Assign addresses:
+   p1 = &length
+   p2 = &breadth
+6. Calculate area using pointers:
+   area = (*p1) * (*p2)
+7. Display the area.
+8. Stop the program.
+9. 
 ## PROGRAM
 
 ```
 #include <stdio.h>
+
 int main() {
-    float x, y, area;
-    float *ptrY = &y;
-    scanf("%f", &x);
-    scanf("%f", ptrY);
-    area = x * (*ptrY);
-    printf("Area of rectangle = %.2f\n", area);
+    int length, breadth, area;
+    int *p1, *p2;
+
+    printf("Enter length and breadth: ");
+    scanf("%d %d", &length, &breadth);
+
+    p1 = &length;
+    p2 = &breadth;
+
+    area = (*p1) * (*p2);
+
+    printf("Area of rectangle = %d", area);
+
     return 0;
 }
 
 ```
 
 ## OUTPUT
-
-![alt text](C-26.png)
-
+```
+Enter length and breadth: 10 5
+Area of rectangle = 50
+```
 ## RESULT
 
 Thus the program to find area of rectangle using pointer has been executed successfully
@@ -45,37 +60,49 @@ To write a C Program to print 'WELCOME' using malloc() and free().
 ## ALGORITHM
 
 1. Start the program.
-2. Read a string variable.
-3. Allocate memory using malloc().
-4. Display the string.
-5. Remove the allocated memory using free().
-6. Stop the program.
-
+2. Declare a character pointer.
+3. Allocate memory using malloc() for storing the string "WELCOME".
+4. Store the string in the allocated memory.
+5. Print the string.
+6. Free the allocated memory using free().
+7. Stop the program.
+   
 ## PROGRAM
 
 ```
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 int main() {
-    char *str;
-    str = (char *)malloc(8 * sizeof(char));
-    if(str == NULL) {
-        printf("Memory allocation failed.\n");
+    char *ptr;
+
+    // Allocate memory for 8 characters (WELCOME + '\0')
+    ptr = (char *)malloc(8 * sizeof(char));
+
+    if (ptr == NULL) {
+        printf("Memory allocation failed");
         return 1;
     }
-    strcpy(str, "WELCOME");
-    printf("%s\n", str);
-    free(str);
+
+    // Copy string into allocated memory
+    strcpy(ptr, "WELCOME");
+
+    // Print the string
+    printf("%s", ptr);
+
+    // Free allocated memory
+    free(ptr);
+
     return 0;
 }
 
 ```
 
 ## OUTPUT
-
-![alt text](C-27.png)
-
+```
+WELCOME
+```
 ## RESULT
 
 Thus the program to print 'WELCOME' using malloc() and free() has been executed successfully.
@@ -89,36 +116,56 @@ To write a C Program to store the student information and display it using struc
 ## ALGORITHM
 
 1. Start the program.
-2. Create a student structure with name, roll number and marks as members.
-3. Using structure variable read the structure members and print them.
-4. Stop the program.
+2. Define a structure student with fields: roll, name, and marks.
+3. Declare a structure variable.
+4. Read student details from the user.
+5. Display the stored student information.
+6. Stop the program.m.
 
 ## PROGRAM
 
 ```
 #include <stdio.h>
-struct Student {
-    char name[50];
+
+struct student {
     int roll;
+    char name[50];
     float marks;
 };
+
 int main() {
-    struct Student s;
-    scanf("%[^\n]", s.name);
+    struct student s;
+
+    printf("Enter Roll Number: ");
     scanf("%d", &s.roll);
+
+    printf("Enter Name: ");
+    scanf("%s", s.name);
+
+    printf("Enter Marks: ");
     scanf("%f", &s.marks);
-    printf("%s\n", s.name);
-    printf("%d\n", s.roll);
-    printf("%.2f\n", s.marks);
+
+    printf("\nStudent Details:\n");
+    printf("Roll Number: %d\n", s.roll);
+    printf("Name: %s\n", s.name);
+    printf("Marks: %.2f\n", s.marks);
+
     return 0;
 }
 
 ```
 
 ## OUTPUT
+```
+Enter Roll Number: 101
+Enter Name: Ravi
+Enter Marks: 85.5
 
-![alt text](C-28.png)
-
+Student Details:
+Roll Number: 101
+Name: Ravi
+Marks: 85.50
+```
 ## RESULT
 
 Thus the program to store the student information and display it using structure has been executed successfully.
@@ -132,44 +179,100 @@ To write a C Program to read and store the data of 3 employees and calculate the
 ## ALGORITHM
 
 1. Start the program.
-2. Create an employee structure with name, id and salary details as members.
-3. Using structure variable read the structure members.
-4. Calculate the gross salary and print the details.
-5. Stop the program.
-
+2. Define a structure employee with fields:
+   id, name, basic, hra, da, gross.
+3. Declare an array of 3 employees.
+4. For each employee (loop 3 times):
+5. Read id, name, and basic salary.
+6. Calculate:
+   hra = 20% of basic
+   da = 10% of basic
+   gross = basic + hra + da
+7. Display details of all employees including gross salary.
+8. Stop the program.
+   
 ## PROGRAM
 
 ```
 #include <stdio.h>
-struct Employee {
-    char name[50];
+
+struct employee {
     int id;
+    char name[50];
     float basic, hra, da, gross;
 };
+
 int main() {
-    struct Employee emp[3];
+    struct employee e[3];
     int i;
-    for(i = 0; i < 3; i++) {
-        scanf("%[^\n]", emp[i].name);
-        scanf("%d", &emp[i].id);
-        scanf("%f %f %f", &emp[i].basic, &emp[i].hra, &emp[i].da);
-        getchar();
-        emp[i].gross = emp[i].basic + emp[i].hra + emp[i].da;
+
+    // Input
+    for (i = 0; i < 3; i++) {
+        printf("\nEnter details of employee %d\n", i + 1);
+
+        printf("Enter ID: ");
+        scanf("%d", &e[i].id);
+
+        printf("Enter Name: ");
+        scanf("%s", e[i].name);
+
+        printf("Enter Basic Salary: ");
+        scanf("%f", &e[i].basic);
+
+        // Calculations
+        e[i].hra = 0.20 * e[i].basic;
+        e[i].da = 0.10 * e[i].basic;
+        e[i].gross = e[i].basic + e[i].hra + e[i].da;
     }
-    for(i = 0; i < 3; i++) {
-        printf("%s\n", emp[i].name);
-        printf("%d\n", emp[i].id);
-        printf("%.2f\n", emp[i].gross);
+
+    // Output
+    printf("\nEmployee Details:\n");
+    for (i = 0; i < 3; i++) {
+        printf("\nID: %d\n", e[i].id);
+        printf("Name: %s\n", e[i].name);
+        printf("Basic Salary: %.2f\n", e[i].basic);
+        printf("Gross Salary: %.2f\n", e[i].gross);
     }
+
     return 0;
 }
 
 ```
 
 ## OUTPUT
+```
+Enter details of employee 1
+Enter ID: 101
+Enter Name: Ravi
+Enter Basic Salary: 10000
 
-![alt text](C-29.png)
+Enter details of employee 2
+Enter ID: 102
+Enter Name: Kumar
+Enter Basic Salary: 12000
 
+Enter details of employee 3
+Enter ID: 103
+Enter Name: Anu
+Enter Basic Salary: 15000
+
+Employee Details:
+
+ID: 101
+Name: Ravi
+Basic Salary: 10000.00
+Gross Salary: 13000.00
+
+ID: 102
+Name: Kumar
+Basic Salary: 12000.00
+Gross Salary: 15600.00
+
+ID: 103
+Name: Anu
+Basic Salary: 15000.00
+Gross Salary: 19500.00
+```
 ## RESULT
 
 Thus the C program to read and store the data of 3 employees and calculate their Gross Salary using the concept of structure.
@@ -182,69 +285,64 @@ Create a C program to calculate the total and average of student using structure
 
 ## ALGORITHM
 
-Step 1: Start the program.
-Step 2: Define a struct student with:
-• name: a character array (size 10) for the student's name (not used in the logic).
-• rollno: an integer for the student's roll number (also unused).
-• subject[5]: an array to store marks of 5 subjects.
-• total: an integer to store total marks.
-Step 3: Declare an array s[2] of type struct student for 2 students. Also declare variables n, i, and j for input
-and iteration.
-Step 4: Input Loop (i = 0 to 1):
-• Read an integer n (but it's not used later — possibly intended for roll number or placeholder).
-• Loop j = 0 to 4:
-o Read 5 subject marks into s[i].subject[j].
-Step 5: Total Marks Calculation Loop (i = 0 to 1):
-• Initialize s[i].total to 0.
-• Loop j = 0 to 4:
-o Add each subject mark to s[i].total.
-Step 6: Override Total (Hardcoded):
-• Set s[0].total = 374;
-• Set s[1].total = 383;
-This step overwrites the computed totals. It seems like testing or hardcoded totals — unnecessary if you’re
-already calculating them.
-Step 7: Output Loop (i = 0 to 1):
-• Print s[i].total for each student.
-Step 8: End the program.
+1. Start the program.
+2. Define a structure student with fields:
+   name, marks1, marks2, marks3, total, average.
+3. Declare a structure variable.
+4. Read student name and marks of 3 subjects.
+5. Calculate:
+   total = marks1 + marks2 + marks3
+   average = total / 3.0
+6. Display student details, total, and average.
+7. Stop the program.
+
 
 ## PROGRAM
 
 ```
 #include <stdio.h>
-struct Student {
-    char name[10];
-    int rollno;
-    int subject[5];
+
+struct student {
+    char name[50];
+    int marks1, marks2, marks3;
     int total;
     float average;
 };
+
 int main() {
-    struct Student s[2];
-    int i, j;
-    for(i = 0; i < 2; i++) {
-        for(j = 0; j < 5; j++) {
-            scanf("%d", &s[i].subject[j]);
-        }
-    }
-    for(i = 0; i < 2; i++) {
-        s[i].total = 0;
-        for(j = 0; j < 5; j++) {
-            s[i].total += s[i].subject[j];
-        }
-        s[i].average = s[i].total / 5.0;
-    }
-    for(i = 0; i < 2; i++) {
-        printf("%d %.2f\n", s[i].total, s[i].average);
-    }
+    struct student s;
+
+    printf("Enter student name: ");
+    scanf("%s", s.name);
+
+    printf("Enter marks of 3 subjects: ");
+    scanf("%d %d %d", &s.marks1, &s.marks2, &s.marks3);
+
+    // Calculate total and average
+    s.total = s.marks1 + s.marks2 + s.marks3;
+    s.average = s.total / 3.0;
+
+    // Display
+    printf("\nStudent Details:\n");
+    printf("Name: %s\n", s.name);
+    printf("Total Marks: %d\n", s.total);
+    printf("Average: %.2f\n", s.average);
+
     return 0;
 }
 
 ```
 
 ## OUTPUT
+```
+Enter student name: Ravi
+Enter marks of 3 subjects: 80 75 85
 
-![alt text](C-30.png)
-
+Student Details:
+Name: Ravi
+Total Marks: 240
+Average: 80.00
+```
 ## RESULT
 
 Thus the C program to calculate the total and average of student using structure has been executed successfully.
